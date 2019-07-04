@@ -1,0 +1,18 @@
+<section>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <tr>
+          <th>#</th>
+          <th>Código</th>
+          <th>Nome</th>
+        </tr>
+        <tr *ngFor="let curriculo of curriculos">
+          <td>{{curriculo.id}}</td>
+          <td>{{curriculo.codigo}}</td>
+          <td>{{curriculo.nome}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>

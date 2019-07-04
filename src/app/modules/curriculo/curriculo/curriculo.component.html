@@ -1,106 +1,89 @@
-<app-header></app-header>
-
 <section>
-    
-    <div class="row aluno">
-        <div class="col text-center my-2">
-            <h3 class="m-0"><b>NOME DO ALUNO</b></h3>
-            <p>CURSO DO ALUNO</p>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group text-center">
+                <label for="aluno">SELECIONE O ALUNO</label>
+                <select class="form-control" [(ngModel)]="aluno" (ngModelChange)="load()">
+                    <option *ngFor="let aluno of alunos" [value]="aluno.id">{{aluno.nome}}</option>
+                </select>
+            </div>
         </div>
     </div>
 
     <div class="row curriculo">
-        <div class="col">
+        <div class="col" *ngFor="let semestre of grade; let i = index">
             <div class="title text-center">
-                1º SEMESTRE
+                {{i + 1}}º SEMESTRE
             </div>
-            <div class="card">
+            <div class="card" *ngFor="let disciplina of semestre">
                 <div class="card-body">
-                    <p class="small m-0">INF0220</p>
-                    <p class="m-0"><b>ALGORITMOS</b></p>
+                    <p class="small m-0">{{disciplina.codigo}}</p>
+                    <p class="m-0"><b>{{disciplina.nome}}</b></p>
+                    <p class="small m-0" *ngIf="disciplina.requisitos.length > 0"><b>REQUISITOS:</b> 
+                    <span style="margin-left: 5px;" *ngFor="let r of disciplina.requisitos">{{r.codigo}} ({{r.tipo}}) </span></p>
+                    <p class="small m-0" *ngIf="disciplina.semestre_cursado"><b>Semestre:</b> {{disciplina.semestre_cursado}}</p>
+                    <p class="small m-0" *ngIf="disciplina.nota"><b>Nota:</b> {{disciplina.nota}}</p>
+                    <p class="small m-0"><b>Nota Mínima:</b> {{disciplina.nota_minima}}</p>
                 </div>
                 <div class="card-footer">
-                    <p class="badge badge-success">CURSADO</p>
+                    <div class="row">
+                        <div class="col">
+                            <p class="badge badge-success" *ngIf="disciplina.semestre_cursado && disciplina.nota && +disciplina.nota_minima <= +disciplina.nota">CURSADO</p>
+                            <p class="badge badge-danger" *ngIf="disciplina.semestre_cursado && disciplina.nota && +disciplina.nota_minima > +disciplina.nota">REPROVADO</p>
+                            <p class="badge badge-warning" *ngIf="disciplina.semestre_cursado && !disciplina.nota">CURSANDO</p>
+                        </div>
+                        <div>
+                            <a class="btn btn-success p-1" *ngIf="!disciplina.matricula">
+                                <i class="material-icons text-white" style="font-size: 13px;" (click)="add(disciplina)">add</i>
+                            </a>
+                            <a class="btn btn-primary p-1" *ngIf="disciplina.matricula">
+                                <i class="material-icons text-white" style="font-size: 13px;" (click)="edit(disciplina)">edit</i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                    <div class="card-body">
-                        <p class="small m-0">INF0220</p>
-                        <p class="m-0"><b>REDES DE COMPUTADORES I</b></p>
-                    </div>
-                    <div class="card-footer">
-                        <p class="badge badge-secondary">NÃO CURSADO</p>
-                    </div>
-                </div>
         </div>
-        <div class="col">
-                <div class="title text-center">
-                    2º SEMESTRE
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <p class="small m-0">INF0221</p>
-                        <p class="m-0"><b>REDES DE COMPUTADORES II</b></p>
-                        <p class="small m-0"><b>REQUISITOS:</b> INF0220</p>
-                    </div>
-                    <div class="card-footer">
-                        <p class="badge badge-danger">POSSUI PRÉ REQUISITO</p>
-                    </div>
-                </div>
+    </div>
+
+    <div class="modal" style="display: inherit;" *ngIf="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Matrícula</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="col">
-                    <div class="title text-center">
-                        3º SEMESTRE
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p></p>
-                        </div>
-                        <div class="card-footer">
-                            <p></p>
-                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col text-center mb-3">
+                        <b>{{matricula.nome}}</b>
                     </div>
                 </div>
-                <div class="col">
-                        <div class="title text-center">
-                            4º SEMESTRE
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <p></p>
-                            </div>
-                            <div class="card-footer">
-                                <p></p>
-                            </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="semestre">Semestre Cursado</label>
+                            <input type="number" class="form-control" name="semestre" id="semestre" [(ngModel)]="matricula.semestre">
                         </div>
                     </div>
                     <div class="col">
-                            <div class="title text-center">
-                                5º SEMESTRE
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <p></p>
-                                </div>
-                                <div class="card-footer">
-                                    <p></p>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="nota">Nota</label>
+                            <input type="number" class="form-control" name="nota" id="nota" [(ngModel)]="matricula.nota">
                         </div>
-                        <div class="col">
-                                <div class="title text-center">
-                                    6º SEMESTRE
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p></p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </div>
-
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="close()">Fechar</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Salvar mudanças</button>
+            </div>
+            </div>
+        </div>
     </div>
 
 </section>

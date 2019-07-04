@@ -1,0 +1,53 @@
+<header>
+    <div style="width: 400px; float:left;">
+      <i class="material-icons">event</i>
+      <h1>CONTROLE DE CURRÍCULO</h1>
+    </div>
+    <div class="text-right">
+      <p class="m-0"><b>Olá, CESAR AUGUSTO GRAEFF</b></p>
+      <p class="text-danger">SAIR</p>
+    </div>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" [routerLink]="['/curriculos']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">event</i>
+        Visualização
+      </a>
+    </li>
+    <li class="nav-item " [routerLink]="['/cursos']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">collections_bookmark</i>
+        Cursos
+      </a>
+    </li>
+    <li class="nav-item" [routerLink]="['/curriculos/listar']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">bookmark</i>
+        Currículos
+      </a>
+    </li>
+    <li class="nav-item" [routerLink]="['/disciplinas']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">library_books</i>
+        Disciplinas
+      </a>
+    </li>
+    <li class="nav-item" [routerLink]="['/alunos']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">people</i>
+        Alunos
+      </a>
+    </li>
+    <li class="nav-item" [routerLink]="['/usuarios']" routerLinkActive="active">
+      <a class="nav-link">
+        <i class="material-icons">people</i>
+        Usuários
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<router-outlet></router-outlet>

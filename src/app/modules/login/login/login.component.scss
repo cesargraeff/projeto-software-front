@@ -1,0 +1,35 @@
+.row{
+    height: 100%;
+    margin: 0;
+}
+  
+
+.login{
+    background: #EAEAEA;
+    margin-left: 1px solid #EEE;
+    .row{
+        margin: 0 auto;
+        max-width: 350px;
+    }
+    .form-check{
+        margin-bottom: 15px;
+        font-weight: lighter;
+        font-size: 16px;
+    }
+    input{
+        background: #FFF;
+        border-radius: 10px;
+        border: 1px solid #CCC;
+        padding: 10px;
+    }
+}
+
+i{
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+h1{
+    font-size: 30px;
+    font-weight: lighter;
+}
+  
